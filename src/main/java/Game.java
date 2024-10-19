@@ -9,15 +9,21 @@ public class Game {
 
     }
 
-    public int round(String playerName1, String playerName2) {
+    public int round(String playerName1, String playerName2) throws NotRegisteredException {
 
-        if (test(playerName1, playerName2)) {
+        boolean check1 = checkName(playerName1);
+        boolean check2 = checkName(playerName2);
 
-        } else {
+        if (!check1 && check2) {
             throw new NotRegisteredException("" +
-                    "Игрок не зарегистрирован на турнир");
+                    "Игрок с именем " + playerName1 + " не зарегистрирован на турнир");
+        } else if (check1 && !check2) {
+            throw new NotRegisteredException("" +
+                    "Игрок с именем " + playerName2 + " не зарегистрирован на турнир");
+        } else if (!check1 && !check2) {
+            throw new NotRegisteredException("" +
+                    "Игроки с именами " + playerName1 + " и " + playerName2 + " не зарегистрирован на турнир");
         }
-
         Player player1 = null;
         Player player2 = null;
         for (Player player : person) {
@@ -35,16 +41,6 @@ public class Game {
             return 2;
         } else {
             return 0;
-        }
-    }
-
-
-    //System.out.println("Игроки зарегистрированы. Начинается турнир");
-    public boolean test(String playerName1, String playerName2) {
-        if (this.checkName(playerName1) && this.checkName(playerName2)) {
-            return true;
-        } else {
-            return false;
         }
     }
 
